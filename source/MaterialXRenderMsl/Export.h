@@ -1,0 +1,22 @@
+//
+// Copyright (c) 2023 Apple Inc.
+// Licensed under the Apache License v2.0
+//
+
+#ifndef MATERIALX_RENDERMSL_EXPORT_H
+#define MATERIALX_RENDERMSL_EXPORT_H
+
+#include <MaterialXCore/Library.h>
+
+/// @file
+/// Macros for declaring imported and exported symbols.
+
+#if defined(MATERIALX_RENDERMSL_EXPORTS)
+    #define MX_RENDERMSL_API MATERIALX_SYMBOL_EXPORT
+    #define MX_RENDERMSL_EXTERN_TEMPLATE(...) MATERIALX_EXPORT_EXTERN_TEMPLATE(__VA_ARGS__)
+#else
+    #define MX_RENDERMSL_API MATERIALX_SYMBOL_IMPORT
+    #define MX_RENDERMSL_EXTERN_TEMPLATE(...) MATERIALX_IMPORT_EXTERN_TEMPLATE(__VA_ARGS__)
+#endif
+
+#endif

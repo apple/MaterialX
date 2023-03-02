@@ -4,14 +4,10 @@
 #include <MaterialXView/Editor.h>
 #include <MaterialXView/Material.h>
 
-#include <MaterialXRenderGlsl/GLFramebuffer.h>
-
 #include <MaterialXRender/Camera.h>
 #include <MaterialXRender/GeometryHandler.h>
 #include <MaterialXRender/LightHandler.h>
 #include <MaterialXRender/Timer.h>
-
-#include <MaterialXGenGlsl/GlslShaderGenerator.h>
 
 #include <MaterialXCore/Unit.h>
 
@@ -352,6 +348,7 @@ class Viewer : public ng::Screen
     std::map<mx::MeshPartitionPtr, MaterialPtr> _materialAssignments;
 
     // Cameras
+    mx::CameraPtr _identityCamera;
     mx::CameraPtr _viewCamera;
     mx::CameraPtr _envCamera;
     mx::CameraPtr _shadowCamera;
@@ -368,7 +365,9 @@ class Viewer : public ng::Screen
 
     // Shader generator contexts
     mx::GenContext _genContext;
+#ifdef MATERIALXVIEW_OPENGL_BACKEND
     mx::GenContext _genContextEssl;
+#endif
 #if MATERIALX_BUILD_GEN_OSL
     mx::GenContext _genContextOsl;
 #endif

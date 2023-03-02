@@ -1,5 +1,8 @@
 #include <MaterialXView/Material.h>
 
+
+#include <MaterialXRenderGlsl/GlslProgram.h>
+#include <MaterialXGenShader/HwShaderGenerator.h>
 #include <MaterialXRenderGlsl/External/Glad/glad.h>
 #include <MaterialXRenderGlsl/GLTextureHandler.h>
 #include <MaterialXRenderGlsl/GLUtil.h>

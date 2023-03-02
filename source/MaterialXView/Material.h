@@ -1,9 +1,35 @@
 #ifndef MATERIALXVIEW_MATERIAL_H
 #define MATERIALXVIEW_MATERIAL_H
 
-#include <MaterialXRenderGlsl/GlslProgram.h>
+#include <MaterialXCore/Generated.h>
+#include <memory>
 
-#include <MaterialXGenGlsl/GlslShaderGenerator.h>
+#if defined(MATERIALXVIEW_OPENGL_BACKEND)
+
+MATERIALX_NAMESPACE_BEGIN
+class GlslProgram;
+using GlslProgramPtr = std::shared_ptr<class GlslProgram>;
+MATERIALX_NAMESPACE_END
+
+#define PROGRAM_PTR mx::GlslProgramPtr
+
+#elif defined(MATERIALXVIEW_METAL_BACKEND)
+
+MATERIALX_NAMESPACE_BEGIN
+class MslProgram;
+using MslProgramPtr = std::shared_ptr<class MslProgram>;
+MATERIALX_NAMESPACE_END
+
+#define PROGRAM_PTR mx::MslProgramPtr
+
+#endif
+
+#include <MaterialXRender/Mesh.h>
+#include <MaterialXRender/Image.h>
+#include <MaterialXRender/ImageHandler.h>
+#include <MaterialXRender/LightHandler.h>
+#include <MaterialXRender/GeometryHandler.h>
+#include <MaterialXRender/Camera.h>
 #include <MaterialXGenShader/UnitSystem.h>
 
 namespace mx = MaterialX;
@@ -121,7 +147,7 @@ class Material
     }
 
     /// Return the underlying GLSL program.
-    mx::GlslProgramPtr getProgram() const
+    PROGRAM_PTR getProgram() const
     {
         return _glProgram;
     }
@@ -159,6 +185,11 @@ class Material
 
     /// Bind a mesh partition to this material.
     bool bindPartition(mx::MeshPartitionPtr part) const;
+    
+    void prepareUsedResources(mx::CameraPtr cam,
+                    mx::GeometryHandlerPtr geometryHandler,
+                    mx::ImageHandlerPtr imageHandler,
+                    mx::LightHandlerPtr lightHandler);
 
     /// Draw the given mesh partition.
     void drawPartition(mx::MeshPartitionPtr part) const;
@@ -181,7 +212,7 @@ class Material
 
   protected:
     mx::ShaderPtr _hwShader;
-    mx::GlslProgramPtr _glProgram;
+    PROGRAM_PTR _glProgram;
 
     mx::MeshPtr _boundMesh;
 
