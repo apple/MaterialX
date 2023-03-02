@@ -29,6 +29,26 @@ struct FresnelData
 
     // Refraction
     bool refraction;
+
+#ifdef __METAL__ 
+FresnelData(int   _model        = 0, 
+            vec3  _ior          = vec3(0.0f),
+            vec3  _extinction   = vec3(0.0f),
+            vec3  _F0           = vec3(0.0f),
+            vec3  _F90          = vec3(0.0f),
+            float _exponent     = 0.0f,
+            float _tf_thickness = 0.0f,
+            float _tf_ior       = 0.0f,
+            bool  _refraction   = false) : 
+                model(_model),
+                ior(_ior),
+                extinction(_extinction),
+                F0(_F0), F90(_F90), exponent(_exponent),
+                tf_thickness(_tf_thickness),
+                tf_ior(_tf_ior),
+                refraction(_refraction) {}
+#endif
+
 };
 
 // https://media.disneyanimation.com/uploads/production/publication_asset/48/asset/s2012_pbs_disney_brdf_notes_v3.pdf
